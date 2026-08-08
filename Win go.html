@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Trade - Demo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="logo">
+            <div class="logo-icon">CT</div>
+
+            <div class="logo-text">
+                win <span>GO</span>
+            </div>
+        </div>
+
+        <div class="online">
+            <span class="online-dot"></span>
+             LIVE 
+        </div>
+
+    </header>
+
+
+    <!-- BALANCE BAR -->
+    <section class="balance-bar">
+
+        <div class="balance-left">
+            <div class="balance-icon">💎</div>
+
+            <div>
+                <div class="balance-label">AVAILABLE BALANCE</div>
+                <div class="balance-value">
+                    ₹<span id="balance">10000.00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="balance-status">
+            INR
+        </div>
+
+    </section>
+
+
+    <!-- WELCOME -->
+    <div class="welcome">
+        <div class="welcome-text">
+            ✨ Welcome to Color Trade • Select your prediction before the timer ends
+        </div>
+    </div>
+
+
+    <!-- GAME CARD -->
+    <section class="game-card">
+
+        <div class="game-top">
+
+            <div class="game-title">
+                Win Go 30 Sec
+                <small>Prediction </small>
+            </div>
+
+            <div class="round-box">
+                <div class="round-label">ROUND ID</div>
+                <div class="round-id" id="roundId">
+                    CT202608080001
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- TIMER -->
+        <div class="timer-area">
+
+            <div class="timer-label">
+                NEXT RESULT IN
+            </div>
+
+            <div class="timer" id="timer">
+                00:30
+            </div>
+
+            <div class="timer-progress">
+                <div class="timer-bar" id="timerBar"></div>
+            </div>
+
+        </div>
+
+
+        <!-- PREDICTION -->
+        <div class="section-title">
+            Select Prediction
+        </div>
+
+        <div class="prediction-grid">
+
+            <button class="predict-btn"
+                    onclick="selectPrediction('BIG',this)">
+
+                <div class="predict-icon">📈</div>
+
+                <div class="predict-name">
+                    BIG
+                </div>
+
+                <div class="predict-sub">
+                    5 - 9
+                </div>
+
+            </button>
+
+
+            <button class="predict-btn"
+                    onclick="selectPrediction('SMALL',this)">
+
+                <div class="predict-icon">📉</div>
+
+                <div class="predict-name">
+                    SMALL
+                </div>
+
+                <div class="predict-sub">
+                    0 - 4
+                </div>
+
+            </button>
+
+        </div>
+
+
+        <!-- COLORS -->
+        <div class="section-title color-title">
+            Select Color
+        </div>
+
+        <div class="color-grid">
+
+            <button class="color-btn green"
+                    onclick="selectColor('GREEN',this)">
+
+                <div class="color-dot"></div>
+                GREEN
+
+            </button>
+
+
+            <button class="color-btn red"
+                    onclick="selectColor('RED',this)">
+
+                <div class="color-dot"></div>
+                RED
+
+            </button>
+
+
+            <button class="color-btn violet"
+                    onclick="selectColor('VIOLET',this)">
+
+                <div class="color-dot"></div>
+                VIOLET
+
+            </button>
+
+        </div>
+
+
+        <!-- AMOUNT -->
+        <div class="amount-section">
+
+            <div class="section-title">
+                Enter Amount
+            </div>
+
+            <div class="amount-input-box">
+
+                <span class="rupee">₹</span>
+
+                <input
+                    type="number"
+                    id="amountInput"
+                    min="1"
+                    max="10000"
+                    value="100"
+                    placeholder="Enter amount"
+                    oninput="updateAmount()"
+                >
+
+            </div>
+
+
+            <!-- QUICK AMOUNT -->
+            <div class="quick-amounts">
+
+                <button onclick="setAmount(50)">
+                    ₹50
+                </button>
+
+                <button onclick="setAmount(100)">
+                    ₹100
+                </button>
+
+                <button onclick="setAmount(500)">
+                    ₹500
+                </button>
+
+                <button onclick="setAmount(1000)">
+                    ₹1K
+                </button>
+
+            </div>
+
+
+            <div class="selected-amount">
+                Selected Amount:
+                <strong>₹<span id="selectedAmount">100</span></strong>
+            </div>
+
+        </div>
+
+
+        <!-- CONFIRM -->
+        <button class="confirm-btn" onclick="placeDemoPrediction()">
+
+            <span>🎯</span>
+            CONFIRM  PREDICTION
+
+        </button>
+
+
+        <!-- LAST RESULT -->
+        <div class="last-result">
+
+            <div>
+
+                <div class="result-label">
+                    LAST RESULT
+                </div>
+
+                <div id="lastRound"
+                     class="last-round">
+                    Waiting...
+                </div>
+
+            </div>
+
+
+            <div class="result-content">
+
+                <div class="result-number"
+                     id="lastNumber">
+                    -
+                </div>
+
+                <div id="lastType"
+                     class="result-badge badge-small">
+                    WAIT
+                </div>
+
+                <div id="lastColor"
+                     class="result-badge badge-violet">
+                    WAIT
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- STATISTICS -->
+    <div class="stats">
+
+        <div class="stat">
+
+            <div class="stat-value"
+                 id="totalRounds">
+                0
+            </div>
+
+            <div class="stat-label">
+                ROUNDS
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-value"
+                 id="bigCount">
+                0
+            </div>
+
+            <div class="stat-label">
+                BIG
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-value"
+                 id="smallCount">
+                0
+            </div>
+
+            <div class="stat-label">
+                SMALL
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HISTORY -->
+    <section class="history-card">
+
+        <div class="history-head">
+
+            <div class="history-title">
+                📜 Result History
+            </div>
+
+            <div class="history-count"
+                 id="historyCount">
+                0 Results
+            </div>
+
+        </div>
+
+
+        <div class="history-list"
+             id="historyList">
+
+            <div class="history-row header-row">
+
+                <div>ROUND</div>
+                <div>NUM</div>
+                <div>TYPE</div>
+                <div>COLOR</div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+
+    <button class="nav-item active"
+            onclick="navClick(this,'Game')">
+
+        <span class="nav-icon">🎮</span>
+        Game
+
+    </button>
+
+
+    <button class="nav-item"
+            onclick="navClick(this,'History')">
+
+        <span class="nav-icon">📜</span>
+        History
+
+    </button>
+
+
+    <button class="nav-item"
+            onclick="navClick(this,'Stats')">
+
+        <span class="nav-icon">📊</span>
+        Stats
+
+    </button>
+
+
+    <button class="nav-item"
+            onclick="navClick(this,'Profile')">
+
+        <span class="nav-icon">👤</span>
+        Profile
+
+    </button>
+
+</nav>
+
+
+<!-- TOAST -->
+<div class="toast"
+     id="toast">
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
